@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+}
+
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+canvas {
+  max-width: 100% !important; 
+  max-height: 100% !important;
+}
+
+@layer utilities {
+  .toggle-modal {
+    @apply pointer-events-auto opacity-100;
+  }
+  .active-collapse {
+    @apply z-10 p-2 max-h-full;
+  }
+}
