@@ -22,7 +22,6 @@
     }
     const url = `/dashboard?take=${take*(clicked+1)}&skip=${skip*clicked}`;
     await goto(url);
-    location.reload();
   }
 
 
