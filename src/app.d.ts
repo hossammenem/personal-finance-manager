@@ -14,6 +14,8 @@ declare global {
       expenses: IMoneyInMoneyOut[];
       bills: IBills[];
       savings: ISavings[];
+      totalIncome: number;
+      totalExpenses: number;
 		}
 		// interface PageData {}
 		// interface Platform {}

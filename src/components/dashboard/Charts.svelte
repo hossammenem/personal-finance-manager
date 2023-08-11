@@ -7,6 +7,8 @@
 
   export let income: IMoneyInMoneyOut[];
   export let expenses: IMoneyInMoneyOut[];
+  export let totalIncome: number;
+  export let totalExpenses: number;
 
   function toggelIncomeChart(){
     let incomeTable: HTMLElement | null = document.getElementById("incomeTable");
@@ -51,7 +53,7 @@
       <h4 class="mb-4 pl-2 sm:pl-0 font-semibold text-lg">Expenses</h4>
       <StatementChart data={expenses} />
     </div>
-    <StatementTable data={income} id="incomeTable" gridLayout="col-[1/-1] row-[2/3] md:row-[2]" />
-    <StatementTable data={expenses} id="expensesTable" gridLayout="col-[1/-1] row-[4/5] md:row-[2]" />
+    <StatementTable total={totalIncome} data={income} id="incomeTable" gridLayout="col-[1/-1] row-[2/3] md:row-[2]" />
+    <StatementTable total={totalExpenses} data={expenses} id="expensesTable" gridLayout="col-[1/-1] row-[4/5] md:row-[2]" />
   </div>
 </Container>

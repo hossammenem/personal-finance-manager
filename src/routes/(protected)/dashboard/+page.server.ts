@@ -2,15 +2,19 @@ import type { PageServerLoad, Actions } from './$types';
 import prisma from "$lib/prisma";
 
 export const load = (async ({ url, fetch }) => {
-  const take = Number(url.searchParams.get("take")) || 7;
-  const skip = Number(url.searchParams.get("skip")) || 0;
+  const incomePage = Number(url.searchParams.get("incomepage")) || 1;
+  const expensesPage = Number(url.searchParams.get("expensespage")) || 1;
 
-  const [ income, expenses, bills, savings ] = await Promise.all([fetch(`/income?take=${take}&skip=${skip}`), fetch("/expenses"), fetch("/bills"), fetch("/savings")])
+  const [ income, totalIncome, expenses, totalExpenses, bills, savings ] = await Promise.all(
+    [fetch(`/income?page=${incomePage}`), fetch("/totalincome"), fetch(`/expenses?page=${expensesPage}`), fetch("/totalexpenses"), fetch("/bills"), fetch("/savings")])
+
   return {
     income: income.json(),
     expenses: expenses.json(),
     bills: bills.json(),
     savings: savings.json(),
+    totalIncome: totalIncome.json(),
+    totalExpenses: totalExpenses.json()
   }
  }) satisfies PageServerLoad;
 

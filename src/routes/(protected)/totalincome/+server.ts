@@ -7,17 +7,12 @@ export async function GET(request: RequestEvent) {
 
   if(!id) return new Response(JSON.stringify({message: "user not found"}), {status: 401})
 
-  const page = Number(request.url.searchParams.get("page"));
-  const take = page * 7;
-  const skip = (page-1) * 7;
 
-  const incomeData = await prisma.income.findMany({
-    take,
-    skip,
+  const totalIncome = await prisma.income.count({
     where: {
       userId: id
     }
   })
 
-  return new Response(JSON.stringify(incomeData), {status: 200});
+  return new Response(JSON.stringify(totalIncome), {status: 200});
 }

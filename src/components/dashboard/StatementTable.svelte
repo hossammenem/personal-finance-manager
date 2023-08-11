@@ -1,29 +1,13 @@
 <script lang="ts">
   import type { IMoneyInMoneyOut } from "$types/types";
-  import { goto } from '$app/navigation';
   import { toggleModal } from "./Modal.svelte";
-  import { page } from "$app/stores";
+  import PaginationBtns from "./PaginationBtns.svelte";
 
   export let id: string;
   export let gridLayout: string;
   export let data: IMoneyInMoneyOut[];
+  export let total: number;
   let isIncome: boolean = id.includes("income");
-
-  let clicked = ((Number($page.url.searchParams.get("take")) || 0) / 7)-1;
-  if (clicked < 0) clicked = 0;
-  let take = 7;
-  let skip = 7;
-
-  async function paginate(action: string){
-    if(action == "next"){
-      clicked+=1;
-    } else {
-      clicked-=1;
-    }
-    const url = `/dashboard?take=${take*(clicked+1)}&skip=${skip*clicked}`;
-    await goto(url);
-  }
-
 
   const formattedDate = (dateObj: string) => {
     const regex = dateObj.match(/[a-zA-Z]/);
@@ -43,24 +27,16 @@
     {:else}
     <button on:click={()=> toggleModal("expensesModal")} 
         class="flex items-center justify-center w-52 px-3 h-8 mr-3 text-sm font-medium text-gray-500 border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700"> 
-        + Add New Expense Entry
+        + Add New Expenses Entry
     </button>
     {/if}
+
     <div class="flex w-fit ml-auto">
-      <button on:click={()=> paginate("preivous")}
-        class="flex items-center justify-center px-3 h-8 mr-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700">
-        <svg class="w-3.5 h-3.5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
-        </svg>
-        Previous
-      </button>
-      <button on:click={()=> paginate("next")}
-        class="flex items-center justify-center px-3 h-8 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-gray-700">
-        Next
-        <svg class="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-        </svg>
-      </button>
+      {#if isIncome}
+        <PaginationBtns type="income" total={total} />
+      {:else}
+        <PaginationBtns type="expenses" total={total} />
+      {/if}
     </div>
   </div>
 

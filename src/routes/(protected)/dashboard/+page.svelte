@@ -12,6 +12,8 @@
   $: expenses = data.expenses;
   let bills = data.bills;
   let savings = data.savings;
+  let totalIncome = data.totalIncome;
+  let totalExpenses = data.totalExpenses; 
 
   if(data?.session?.user){
     accountBalance = data.session.user.accountBalance;
@@ -23,7 +25,7 @@
 </Container>
 
 <SectionTitle>Income And Expenses</SectionTitle>
-<Charts {income} {expenses} />
+<Charts {income} {totalIncome} {expenses} {totalExpenses} />
 
 <SectionTitle>Bills Calendar</SectionTitle>
 <BillsCalendar {bills} />
