@@ -38,12 +38,12 @@
   }
 
   function lenOfMonth(month: number): number {
-    const year = date.getFullYear();
-    const isLeap : boolean = (year % 4 == 0) && (year % 100 != 0) ? true : (year % 400 == 0) ? true : false;
+    const isLeap : boolean = (currYear % 4 == 0) && (currYear % 100 != 0) ? true : (currYear % 400 == 0) ? true : false;
 
     if(month == 1) return (isLeap ? 29 : 28);
     if(month == 7) return 31;
-    if(month % 2 == 0) return 31;
+    if(month % 2 == 0 && month <= 6) return 31;
+    if(month % 2 != 0 && month >= 7) return 31;
     return 30;
   }
 
